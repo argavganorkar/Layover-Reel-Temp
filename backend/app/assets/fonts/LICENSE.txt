@@ -1,0 +1,5 @@
+Fonts in this directory (Playfair Display, Anton, Dancing Script) are from
+Google Fonts (https://fonts.google.com) and are licensed under the SIL Open
+Font License, version 1.1. See https://openfontlicense.org for the full
+license text. They are bundled here so caption rendering works fully
+offline, without depending on fonts.googleapis.com being reachable.

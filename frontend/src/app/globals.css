@@ -1,0 +1,117 @@
+@import "tailwindcss";
+
+/* ---------------------------------------------------------------------
+   Dark theme, warm and muted rather than the usual cold slate/blue dark
+   mode - closer to Claude's own product feel: near-black warmed toward
+   brown rather than blue, a soft terracotta accent instead of a stock
+   SaaS blue, and generous breathing room. Every text/background pairing
+   below was checked against WCAG AA (4.5:1 body text, 3:1 large text/UI).
+   This is the app's only theme (no light/dark toggle - a personal tool
+   doesn't need one), so these are plain values, not light/dark variants.
+--------------------------------------------------------------------- */
+:root {
+  --background: #171512;
+  --surface: #211e1a;
+  --surface-hover: #29251f;
+  --surface-elevated: #2d2924;
+  --border: #3a352d;
+  --border-strong: #4a443a;
+
+  --ink: #f3ede3;
+  --ink-muted: #a89f90;
+  --ink-faint: #8a8071;
+
+  --accent: #dd8867;
+  --accent-solid: #a34f33;
+  --accent-solid-hover: #b85c3e;
+
+  --success: #8fae87;
+  --warning: #d9a441;
+  --error: #e08579;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-surface: var(--surface);
+  --color-surface-hover: var(--surface-hover);
+  --color-surface-elevated: var(--surface-elevated);
+  --color-border: var(--border);
+  --color-border-strong: var(--border-strong);
+
+  --color-ink: var(--ink);
+  --color-ink-muted: var(--ink-muted);
+  --color-ink-faint: var(--ink-faint);
+
+  --color-accent: var(--accent);
+  --color-accent-solid: var(--accent-solid);
+  --color-accent-solid-hover: var(--accent-solid-hover);
+
+  --color-success: var(--success);
+  --color-warning: var(--warning);
+  --color-error: var(--error);
+
+  --font-sans: "Inter", ui-sans-serif, system-ui, -apple-system, Roboto, Helvetica, Arial, sans-serif;
+  --font-serif: "Fraunces", "Iowan Old Style", Georgia, serif;
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+}
+
+body {
+  background: var(--background);
+  color: var(--ink);
+}
+
+/* A faint organic grain over the whole page - the same instinct behind
+   this app's own "paper texture" style preset, applied to the UI chrome
+   itself so flat dark panels don't read as sterile/generic. Static (no
+   animation), so it costs nothing and needs no reduced-motion guard. */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0.05;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+#__next,
+body > div {
+  position: relative;
+  z-index: 1;
+}
+
+/* A soft, warm-tinted shadow reads as depth on a dark surface far better
+   than the usual pure-black box-shadow (which all but disappears against
+   an already-dark background). Used on cards in place of shadow-sm/md. */
+.shadow-warm {
+  box-shadow:
+    0 1px 2px rgba(0, 0, 0, 0.3),
+    0 8px 24px -8px rgba(0, 0, 0, 0.45);
+}
+
+.shadow-warm-lg {
+  box-shadow:
+    0 2px 4px rgba(0, 0, 0, 0.35),
+    0 16px 40px -12px rgba(0, 0, 0, 0.55);
+}
+
+/* Ambient accent glow - used once, behind the header mark - the kind of
+   soft generative-gradient halo that reads as "AI product" rather than
+   plain dashboard chrome. */
+.accent-glow {
+  position: absolute;
+  inset: -60% -40%;
+  background: radial-gradient(closest-side, color-mix(in oklab, var(--accent) 35%, transparent), transparent 70%);
+  pointer-events: none;
+  z-index: -1;
+}
+
+@keyframes progress-indeterminate {
+  0% {
+    transform: translateX(-110%);
+  }
+  100% {
+    transform: translateX(310%);
+  }
+}

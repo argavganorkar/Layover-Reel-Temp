@@ -1,0 +1,31 @@
+fastapi
+uvicorn[standard]
+python-multipart
+faster-whisper
+anthropic
+python-dotenv
+ollama
+playwright
+opencv-python-headless
+pillow
+# The Phase 10 style preset's subject cutout runs RobustVideoMatting (RVM)
+# via onnxruntime - RVM's resnet50 ONNX weights (~102MB) download once from
+# RVM's own GitHub releases on first use, not after. rembg/pymatting (used
+# by earlier versions of this style preset) are no longer a dependency.
+#
+# Platform-conditional on purpose, so `pip install -r requirements.txt`
+# works unmodified on anyone's machine, not just Windows:
+# - Windows gets onnxruntime-directml, which adds GPU acceleration via
+#   DirectML - works with any DirectX 12 GPU (NVIDIA/AMD/Intel Arc), no
+#   separate CUDA toolkit install needed. style_dna.py automatically falls
+#   back to CPU-only if DirectML isn't actually available at runtime (e.g.
+#   no compatible GPU or driver issue).
+# - Mac/Linux (including this project's own cloud dev sandbox) gets plain
+#   onnxruntime - CPU-only, since DirectML is Windows-only. Style renders
+#   will be slower there; there's no GPU-acceleration equivalent wired up
+#   for Mac/Linux yet.
+# The two packages both provide the top-level `onnxruntime` module and
+# conflict if both installed - pip's environment markers below make sure
+# only the right one is ever selected for a given machine automatically.
+onnxruntime-directml; sys_platform == "win32"
+onnxruntime; sys_platform != "win32"
